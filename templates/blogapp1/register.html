@@ -1,0 +1,29 @@
+
+{%extends 'base.html' %}
+{%block main %}
+<header>
+<form action="" method="post">
+    {%csrf_token %}
+    <label for="">
+        name: <input type="text" name="nme">
+    </label><br><br>
+    <label for="">
+        email: <input type="email" name="mail">
+    </label><br><br>
+    <label for="">
+        Password: <input type="password" name="pwd">
+    </label><br><br>
+    <label for="">
+        Role: <select name="role" id="">
+            {%for r in roles %}
+            <option value="{{r.id}}">{{r.role_name}}</option>
+            {%endfor %}
+        </select>
+    </label><br><br>
+
+    <button>Register</button>
+    <p>have an account? <a href="{%url 'loginurl' %}">login</a></p>
+
+</form>
+</header>
+{%endblock %}
