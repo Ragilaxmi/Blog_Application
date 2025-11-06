@@ -1,29 +1,111 @@
 
 {%extends 'base.html' %}
 {%block main %}
-<header>
-<form action="" method="post">
-    {%csrf_token %}
-    <label for="">
-        name: <input type="text" name="nme">
-    </label><br><br>
-    <label for="">
-        email: <input type="email" name="mail">
-    </label><br><br>
-    <label for="">
-        Password: <input type="password" name="pwd">
-    </label><br><br>
-    <label for="">
-        Role: <select name="role" id="">
-            {%for r in roles %}
-            <option value="{{r.id}}">{{r.role_name}}</option>
-            {%endfor %}
-        </select>
-    </label><br><br>
+<style>
+        .register-box {
+            background-color: #fff;
+            width: 400px;
+            padding: 30px 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            margin-left: 30vw;
+            position: fixed;
+            height: 87vh;
+            top:12vh
+        }
 
-    <button>Register</button>
-    <p>have an account? <a href="{%url 'loginurl' %}">login</a></p>
+        .register-box h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #333;
+            margin-top: 1vh;
+        }
 
-</form>
-</header>
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        p {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+
+<div class="register-box">
+        <h2>Register</h2>
+
+        <form action="" method="post">
+            {% csrf_token %}
+
+            <label for="nme">Name</label>
+            <input type="text" id="nme" name="nme" placeholder="Enter your name" required>
+
+            <label for="mail">Email</label>
+            <input type="email" id="mail" name="mail" placeholder="Enter your email" required>
+
+            <label for="pwd">Password</label>
+            <input type="password" id="pwd" name="pwd" placeholder="Enter your password" required>
+
+            <label for="role">Role</label>
+            <select name="role" id="role" required>
+                <option value="">-- Select Role --</option>
+                {% for r in roles %}
+                    <option value="{{ r.id }}">{{ r.role_name }}</option>
+                {% endfor %}
+            </select>
+
+            <button type="submit">Register</button>
+
+            <p>Already have an account? 
+                <a href="{% url 'loginurl' %}">Login</a>
+            </p>
+        </form>
+    </div>
+
 {%endblock %}
