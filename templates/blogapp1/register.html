@@ -10,8 +10,8 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             margin-left: 30vw;
             position: fixed;
-            height: 87vh;
-            top:12vh
+            height: 89vh;
+            top:10vh
         }
 
         .register-box h2 {
@@ -64,7 +64,7 @@
 
         p {
             text-align: center;
-            margin-top: 15px;
+            margin-top: 2px;
         }
 
         a {
@@ -80,8 +80,11 @@
 <div class="register-box">
         <h2>Register</h2>
 
-        <form action="" method="post">
+        <form action="" method="post" enctype="multipart/form-data">
             {% csrf_token %}
+            <label for="pic">Profile_pic</label>
+            <input type="file"  name="pic" >
+
 
             <label for="nme">Name</label>
             <input type="text" id="nme" name="nme" placeholder="Enter your name" required>

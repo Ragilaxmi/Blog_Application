@@ -1,0 +1,102 @@
+
+
+{%extends 'base.html' %}
+{% load static %}
+{%block main %}
+
+
+
+<div class="container mt-4">
+  <!-- Blog Title -->
+  <h1 class="mb-3">{{ blog.title }}</h1>
+
+  <!-- Author + Date -->
+  <div class="d-flex align-items-center mb-3">
+    <!-- optional author avatar -->
+    <div class="me-3">
+      {% if blog.author.customuser.profile_pic %}
+        <img src="{{ blog.author.customuser.profile_pic.url }}" class="rounded-circle" style="width:48px; height:48px; object-fit:cover;" alt="author">
+      {% else %}
+        <div class="rounded-circle bg-secondary text-white d-flex justify-content-center align-items-center" style="width:48px;height:48px;">
+          <i class="bi bi-person-fill"></i>
+        </div>
+      {% endif %}
+    </div>
+
+    <div>
+      <!-- clicking author name goes to profile page -->
+      <a href="{% url 'readurl' blog.author.user.id %}" class="h6 mb-0 text-decoration-none">
+        {{ blog.author.user.username }}
+      </a>
+      <div class="text-muted small">
+        {{ blog.created_on|date:"F j, Y, g:i a" }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Image (optional) -->
+  {% if blog.image %}
+    <img src="{{ blog.image.url }}" alt="blog image" class="img-fluid rounded mb-4">
+    {%else %}
+      <img src="/media/images/default.jpg" class="img-fluid rounded mb-4" style="width: 30vw; height: 40vh;" alt="Default image">
+
+  {% endif %}
+
+  <!-- Full content -->
+  <div class="mb-4" style="font-size:1.05rem; line-height:1.7;">
+    {{ blog.content|linebreaks }}
+  </div>
+
+  <!-- Read more (if you also show truncated lists elsewhere, detail page shows full.) -->
+
+  <hr>
+
+  <!-- Comment form (only for authenticated users) -->
+
+  <div class="mb-4">
+    <h4>Add Comment</h4>
+     <form action="{% url 'commenturl' blog.id %}" method="post">
+        {% csrf_token %}
+        <div class="mb-2">
+          <textarea name="comment_text" rows="4" class="form-control" placeholder="Leave a comment here." required></textarea>
+        </div>
+        <button class="btn btn-primary">Comment</button>
+      </form>
+  
+
+  </div>
+  
+
+  <hr>
+<!-- Comments list -->
+  <div>
+    <h4>All Comments ({{ comments.count }})</h4>
+
+  {% if comments %}
+      <ul class="list-unstyled">
+        {% for c in comments %}
+          <li class="mb-3">
+            <div class="d-flex align-items-start">
+              <div class="me-3">
+                <!-- small avatar -->
+                <div class="rounded-circle bg-secondary text-white d-flex justify-content-center align-items-center" style="width:36px;height:36px;">
+                  <i class="bi bi-person-fill"></i>
+                </div>
+              </div>
+              <div>
+                <strong><a href="#" class="text-decoration-none">{{ c.commenter.user.username }}</a></strong>
+                <div class="text-muted small">{{ c.commented_on|date:"F j, Y, g:i a" }}</div>
+                <div class="mt-1">{{ c.comment_text|linebreaks }}</div>
+              </div>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="text-muted">No comments yet. Be the first to comment!</p>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}
+

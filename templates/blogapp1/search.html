@@ -1,0 +1,39 @@
+
+{%extends 'base.html' %}
+{%load static %}
+{%block main %}
+
+<div class="container mt-5">
+  <h2>Search Results</h2>
+
+  {% if query %}
+    <p>Results for: <b>{{ query }}</b></p>
+    <div class="row">
+      {% if blogs %}
+        {% for blog in blogs %}
+          <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100">
+              <div class="card-body">
+                 {% if blog.image %}
+                <img src="{{ blog.image.url }}" class="card-img-top" alt="Blog image">
+              {% else %}
+            <img src="/media/images/default.jpg" class="card-img-top" alt="Default image">
+             {% endif %}
+                <h5 class="card-title">{{ blog.title }}</h5>
+                <p class="card-text">{{ blog.content|truncatechars:120 }}</p>
+                <p class="text-muted small">by {{ blog.author.user.username }}</p>
+                <a href="{%url 'readurl' blog.id %}" class="btn btn-primary btn-sm">Read More</a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p>No blogs found for "{{ query }}".</p>
+      {% endif %}
+    </div>
+  {% else %}
+    <p class="text-muted text-center">Please type something and click Search!</p>
+  {% endif %}
+</div>
+
+{%endblock %}

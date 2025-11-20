@@ -1,0 +1,57 @@
+
+{% extends 'base.html' %}
+{% block main %}
+<style>
+
+    .card {
+  border-radius: 15px;
+  transition: transform 0.3s ease-in-out;
+}
+.card:hover {
+  transform: scale(1.03);
+}
+.container .text-center{
+    top: 10vh;
+}
+
+
+</style>
+
+
+<div class="container mt-3">
+  <h2 class="text-center mb-3 mt-6">Latest Blogs</h2>
+
+  <!-- Blog Card Grid -->
+  <div class="row">
+    {% for blog in blog %}
+      <div class="col-md-4 mb-4 d-flex align-items-stretch">
+        <div class="card shadow-lg border-0">
+          {% if blog.image %}
+            <img src="{{ blog.image.url }}" class="card-img-top" alt="Blog image">
+          {% else %}
+            <img src="/media/images/default.jpg" class="card-img-top" alt="Default image">
+          {% endif %}
+          <div class="card-body">
+            <h5 class="card-title">{{ blog.title }}</h5>
+            <p class="card-text">
+              {{ blog.content|truncatewords:20 }}
+            </p>
+            <p class="text-muted">
+              <small><strong>by {{ blog.author.user.username }}</strong>
+                • {{ blog.created_on|date:"M d, Y" }}
+            
+            </small>
+            </p>
+            <a href="{%url 'readurl' blog.id %}"><button type="button" class="btn btn-outline-primary btn-sm">Read More</button>
+            </a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+
+
+
+{%endblock %}

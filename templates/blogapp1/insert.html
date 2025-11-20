@@ -7,13 +7,13 @@
             border-radius: 10px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             padding: 25px;
-            margin-left: 30vw;
+            margin-left: 26vw;
         }
         h2 {
             text-align: center;
             color: #333;
             margin-bottom: 20px;
-            margin-top: 14vh;
+            margin-top: 5vh;
         }
         label {
             display: block;
@@ -51,9 +51,11 @@
 <div class="form-container">
         <h2>Add New Blog</h2>
 
-        <form method="POST" action="">
+        <form method="POST" action="" enctype="multipart/form-data">
             {% csrf_token %}
-            
+            <label for="title">Image</label>
+            <input type="file" id="image" name="image" placeholder="upload blog image" ><br>
+
             <label for="title">Blog Title</label>
             <input type="text" id="title" name="title" placeholder="Enter blog title" required><br>
 
